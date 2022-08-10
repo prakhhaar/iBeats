@@ -1,6 +1,7 @@
 package com.prakhar.ibeats;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -57,17 +58,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         viewHolder.getTextView().setText(localDataSet[position]);
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), PlaySong.class);
-                String currentSong = String.valueOf(viewHolder.getAdapterPosition());
+                String currentSong = String.valueOf(localDataSet[position]);
                 intent.putExtra("songsList", localDataSet);
+                intent.putExtra("currentSong", currentSong);
+                intent.putExtra("position", position);
                 view.getContext().startActivity(intent);
             }
         });
